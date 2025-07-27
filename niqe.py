@@ -263,3 +263,8 @@ if __name__ == "__main__":
 
     print("NIQE of ref parrot image is: %0.3f" % niqe(ref))
     print("NIQE of dis parrot image is: %0.3f" % niqe(dis))
+
+    # NIQE score for bikes reference image: 3.230700
+    # NIQE score for bikes distorted image: 8.032224
+    # NIQE score for parrots reference image: 3.789279
+    # NIQE score for parrots distorted image: 5.612745
