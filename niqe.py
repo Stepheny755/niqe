@@ -1,5 +1,6 @@
 import numpy as np
 import skimage.transform
+from PIL import Image
 import scipy.io
 from os.path import dirname
 from os.path import join
@@ -199,6 +200,13 @@ def _get_patches_generic(img, patch_size, is_train, stride):
     img2 = skimage.transform.resize(
         img, (img.shape[0] // 2, img.shape[1] // 2), order=3
     )
+    # img2 = scipy.misc.imresize(img, 0.5, interp='bicubic', mode='F')
+
+    # img2 = np.array(
+    #     Image.fromarray(img).resize(
+    #         size=(img.shape[1] // 2, img.shape[0] // 2), resample=Image.BICUBIC
+    #     )
+    # )
 
     mscn1, var, mu = compute_image_mscn_transform(img)
     mscn1 = mscn1.astype(np.float32)
