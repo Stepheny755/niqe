@@ -12,6 +12,8 @@ import numpy as np
 import scipy.special
 import math
 
+import basicsr
+
 gamma_range = np.arange(0.2, 10, 0.001)
 a = scipy.special.gamma(2.0 / gamma_range)
 a *= a
@@ -254,25 +256,43 @@ def niqe(inputImgData):
     return niqe_score
 
 
+def niqe2(inputImgData):
+    """
+    This function is a wrapper for niqe that accepts a PIL image.
+    """
+    return basicsr.metrics.niqe.calculate_niqe(inputImgData, 0)
+
+
+# def eval(eval_func):
+
 if __name__ == "__main__":
 
-    ref = np.array(Image.open("./test_imgs/bikes.bmp").convert("LA"))[:, :, 0]  # ref
-    dis = np.array(Image.open("./test_imgs/bikes_distorted.bmp").convert("LA"))[
+    bike_ref = np.array(Image.open("./test_imgs/bikes.bmp").convert("LA"))[
+        :, :, 0
+    ]  # ref
+    bike_dis = np.array(Image.open("./test_imgs/bikes_distorted.bmp").convert("LA"))[
+        :, :, 0
+    ]  # dis
+    parrot_ref = np.array(Image.open("./test_imgs/parrots.bmp").convert("LA"))[
+        :, :, 0
+    ]  # ref
+    parrot_dis = np.array(
+        Image.open("./test_imgs/parrots_distorted.bmp").convert("LA")
+    )[
         :, :, 0
     ]  # dis
 
-    print("NIQE of ref bikes image is: %0.3f" % niqe(ref))
-    print("NIQE of dis bikes image is: %0.3f" % niqe(dis))
-
-    ref = np.array(Image.open("./test_imgs/parrots.bmp").convert("LA"))[:, :, 0]  # ref
-    dis = np.array(Image.open("./test_imgs/parrots_distorted.bmp").convert("LA"))[
-        :, :, 0
-    ]  # dis
-
-    print("NIQE of ref parrot image is: %0.3f" % niqe(ref))
-    print("NIQE of dis parrot image is: %0.3f" % niqe(dis))
+    print("NIQE of ref bikes image is: %0.3f" % niqe(bike_ref))
+    print("NIQE of dis bikes image is: %0.3f" % niqe(bike_dis))
+    print("NIQE of ref parrot image is: %0.3f" % niqe(parrot_ref))
+    print("NIQE of dis parrot image is: %0.3f" % niqe(parrot_dis))
 
     # NIQE score for bikes reference image: 3.230700
     # NIQE score for bikes distorted image: 8.032224
     # NIQE score for parrots reference image: 3.789279
     # NIQE score for parrots distorted image: 5.612745
+
+    print("NIQE2 of ref bikes image is: %0.3f" % niqe2(bike_ref))
+    print("NIQE2 of dis bikes image is: %0.3f" % niqe2(bike_dis))
+    print("NIQE2 of ref parrot image is: %0.3f" % niqe2(parrot_ref))
+    print("NIQE2 of dis parrot image is: %0.3f" % niqe2(parrot_dis))
